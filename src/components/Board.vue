@@ -28,11 +28,11 @@ export default {
     return Board.data;
   },
   watch: {
-    score: function(new_val) {
+    score: function (new_val) {
       this.$emit("change", new_val);
     },
   },
-  created: function() {
+  created: function () {
     window.addEventListener("resize", () => {
       this.Generate_Board();
     });
@@ -40,7 +40,7 @@ export default {
       this.Change_Direction(e.keyCode);
     });
   },
-  destroyed: function() {
+  destroyed: function () {
     window.addEventListener("resize", () => {
       this.Generate_Board();
     });

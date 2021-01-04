@@ -1,3 +1,4 @@
+//Data values for the Board component
 export var data = {
   width: null,
   board: null,
@@ -11,43 +12,61 @@ export var data = {
   constant_true: true,
   is_running: false,
   score: 0,
-  speed: 150,
+  speed: 130,
   can_turn: true,
 };
 
-export const Board = function(y, x) {
+//Board class
+export const Board = function (y, x) {
+  var i = 0;
+  var j = 0;
+  //Dimensions of the grid calculated by the Generate_Board function
   this.y = y;
   this.x = x;
+  //Initialization
   this.matrix = new Array(y);
-  for (var i = 0; i < y; i++) {
+  for (i = 0; i < y; i++) {
     this.matrix[i] = new Array(x);
-    for (var j = 0; j < x; j++) {
+    for (j = 0; j < x; j++) {
       this.matrix[i][j] = {
-        Empty: true,
         Head: false,
         Body: false,
         Friut: false,
       };
     }
   }
-  this.Snake = function(y, x) {
+  //The Snake class
+  this.Snake = function (y, x) {
     this.head = {
       x: x,
       y: y,
     };
-    this.size = 1;
-    this.body = [[y, x]];
+    this.body = [this.head];
   };
-  var center_x = Math.floor(x / 2);
-  var center_y = Math.floor(y / 2);
-  this.snake = new this.Snake(center_y, center_x);
-  this.h_y = center_y;
-  this.h_x = center_x;
-  this.matrix[center_y][center_x].Body = true;
-  this.matrix[center_y][center_x].Head = true;
+  //The snake's initial position is always the center of the board
+  var center = {
+    y: Math.floor(y / 2),
+    x: Math.floor(x / 2),
+  };
+  this.snake = new this.Snake(center.y, center.x);
+  this.h_y = center.y;
+  this.h_x = center.x;
+  this.matrix[center.y][center.x].Body = true;
+  this.matrix[center.y][center.x].Head = true;
+  this.empty = [];
+  for (i = 0; i < y; i++) {
+    for (j = 0; j < x; j++) {
+      if (!(i == center.y && j == center.x)) {
+        this.empty.push({
+          y: i,
+          x: j,
+        });
+      }
+    }
+  }
 };
 
-export const Generate_Board = function() {
+export const Generate_Board = function () {
   var h = document.querySelector(".v-toolbar").scrollHeight;
   var width = 25;
   var height = 25;

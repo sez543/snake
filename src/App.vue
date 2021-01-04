@@ -40,7 +40,7 @@ export default {
     };
   },
   methods: {
-    start: async function() {
+    start: async function () {
       this.is_locked = true;
       this.visible = false;
       this.s = false;
@@ -49,13 +49,13 @@ export default {
       this.is_locked = false;
       this.visible = true;
     },
-    slide: function(val) {
-      this.$refs.Board.speed = 100 + 100 / val;
+    slide: function (val) {
+      this.$refs.Board.speed = 180 - val;
     },
-    score_change: function(val) {
+    score_change: function (val) {
       this.score = val;
     },
-    redirect: function(val) {
+    redirect: function (val) {
       if (!this.is_locked) {
         this.start();
       }

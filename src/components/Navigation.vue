@@ -76,18 +76,18 @@ export default {
       slider: 50,
     };
   },
-  created: function() {
+  created: function () {
     window.addEventListener("keydown", () => {
       this.start();
     });
   },
   methods: {
-    start: function() {
+    start: function () {
       if (!this.is_locked) {
         this.$emit("start");
       }
     },
-    slide: function() {
+    slide: function () {
       if (!this.is_locked) {
         this.$emit("slide", this.slider);
       }
