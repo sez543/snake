@@ -5,6 +5,9 @@
       :is_locked="is_locked"
       :score="score"
       v-on:start="start"
+      v-on:stop="stop"
+      v-on:toggle="toggle"
+      v-on:apple="apple"
       v-on:slide="slide"
     ></Navigation>
     <Board v-on:change="score_change" ref="Board"></Board>
@@ -40,7 +43,7 @@ export default {
     };
   },
   methods: {
-    start: async function () {
+    start: async function() {
       this.is_locked = true;
       this.visible = false;
       this.s = false;
@@ -49,13 +52,22 @@ export default {
       this.is_locked = false;
       this.visible = true;
     },
-    slide: function (val) {
+    stop: function() {
+      this.$refs.Board.is_running = false;
+    },
+    toggle: function(val) {
+      this.$refs.Board.pacifist = val;
+    },
+    apple: function(val) {
+      this.$refs.Board.apples = val;
+    },
+    slide: function(val) {
       this.$refs.Board.speed = 180 - val;
     },
-    score_change: function (val) {
+    score_change: function(val) {
       this.score = val;
     },
-    redirect: function (val) {
+    redirect: function(val) {
       if (!this.is_locked) {
         this.start();
       }

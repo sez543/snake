@@ -21,6 +21,10 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
 
+    <v-btn v-if="toggle" v-on:click="stop" icon>
+      <i class="v-icon fa fa-ban"></i>
+    </v-btn>
+
     <v-btn href="https://github.com/sez543/sez543.github.io" icon>
       <i class="v-icon fa fa-github"></i>
     </v-btn>
@@ -48,8 +52,27 @@
           >
         </v-list-item>
         <v-divider></v-divider>
-        <v-list-item>
-          Speed
+        <v-list-item class="full toggle">
+          <v-switch
+            :disabled="is_locked"
+            v-model="toggle"
+            v-on:click="pacifist"
+            label="Pacifist mode"
+          ></v-switch>
+        </v-list-item>
+        <v-list-item class="apples">
+          <v-select
+            :disabled="is_locked"
+            v-on:change="select_a"
+            v-model="apples"
+            :items="items"
+          ></v-select>
+          <div class="a_label">Apples</div>
+        </v-list-item>
+        <v-list-item class="full slider">
+          <div class="list-label">
+            Speed
+          </div>
           <v-slider
             :disabled="is_locked"
             v-model="slider"
@@ -74,20 +97,32 @@ export default {
   data: () => {
     return {
       slider: 50,
+      toggle: false,
+      items: [0, 1, 2, 5, 10, 50],
+      apples: 1,
     };
   },
-  created: function () {
+  created: function() {
     window.addEventListener("keydown", () => {
       this.start();
     });
   },
   methods: {
-    start: function () {
+    start: function() {
       if (!this.is_locked) {
         this.$emit("start");
       }
     },
-    slide: function () {
+    pacifist: function() {
+      this.$emit("toggle", this.toggle);
+    },
+    select_a: function() {
+      this.$emit("apple", this.apples);
+    },
+    stop: function() {
+      this.$emit("stop");
+    },
+    slide: function() {
       if (!this.is_locked) {
         this.$emit("slide", this.slider);
       }

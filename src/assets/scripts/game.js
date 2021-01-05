@@ -3,20 +3,26 @@ export const Spawn_Fruit = function() {
     Math.floor(Math.random() * this.board.empty.length)
   ];
   this.board.matrix[fruit.y][fruit.x].Fruit = true;
+  this.board.empty = this.board.empty.filter(function(val) {
+    return val.y != fruit.y || val.x != fruit.x;
+  });
 };
 
 export const Start = async function() {
   this.Generate_Board();
   this.d = "right";
+  this.is_running = true;
   this.score = 0;
   var x = this.board.h_x;
   var y = this.board.h_y;
-  this.Spawn_Fruit();
+  for (var i = 0; i < this.apples; i++) {
+    this.Spawn_Fruit();
+  }
   this.direction = this.right;
-  while (this.constant_true) {
+  while (this.is_running) {
     var next = {
-      x: x + this.direction[1],
-      y: y + this.direction[0],
+      x: x + this.direction.x,
+      y: y + this.direction.y,
     };
     if (
       next.y == this.board.y ||
@@ -24,7 +30,22 @@ export const Start = async function() {
       next.x == this.board.x ||
       next.x < 0
     ) {
-      break;
+      if (!this.pacifist) {
+        break;
+      } else {
+        if (next.y == this.board.y) {
+          next.y = 0;
+        }
+        if (next.y < 0) {
+          next.y = this.board.y - 1;
+        }
+        if (next.x == this.board.x) {
+          next.x = 0;
+        }
+        if (next.x < 0) {
+          next.x = this.board.x - 1;
+        }
+      }
     }
     if (this.board.matrix[next.y][next.x].Body) {
       break;
@@ -47,8 +68,8 @@ export const Start = async function() {
       return val.y != next.y || val.x != next.x;
     });
 
-    y = y + this.direction[0];
-    x = x + this.direction[1];
+    y = next.y;
+    x = next.x;
     await new Promise((y) => setTimeout(y, this.speed));
     this.can_turn = true;
   }

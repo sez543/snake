@@ -10,8 +10,34 @@
 .v-list-item {
   flex-direction: column;
   min-height: auto !important;
+  .list-label {
+    font-size: 20px;
+  }
+  &.full {
+    .v-input {
+      width: 100%;
+    }
+  }
+  &.apples {
+    flex-direction: row;
+    .a_label {
+      margin: 0 20px;
+      font-size: 20px;
+    }
+    .v-select__selections {
+      input {
+        display: none;
+      }
+    }
+  }
   .v-input {
-    width: 100%;
+    label {
+      width: auto;
+      flex: auto;
+      color: #ffffff;
+      font-size: 20px;
+      margin: 0 20px;
+    }
   }
   &:first-of-type {
     display: none;
@@ -41,6 +67,22 @@ img {
   .v-list-item {
     &:first-of-type {
       display: block;
+    }
+    .v-input {
+      &.v-input--selection-controls {
+        margin-top: 0;
+      }
+      label {
+        font-size: 17px;
+      }
+    }
+    .list-label {
+      font-size: 17px;
+    }
+    &.apples {
+      .a_label {
+        font-size: 17px;
+      }
     }
   }
   .v-divider {

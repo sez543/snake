@@ -5,19 +5,32 @@ export var data = {
   mounted: false,
   direction: null,
   d: "right",
-  up: [-1, 0],
-  right: [0, 1],
-  down: [1, 0],
-  left: [0, -1],
-  constant_true: true,
+  up: {
+    y: -1,
+    x: 0,
+  },
+  right: {
+    y: 0,
+    x: 1,
+  },
+  down: {
+    y: 1,
+    x: 0,
+  },
+  left: {
+    y: 0,
+    x: -1,
+  },
   is_running: false,
   score: 0,
   speed: 130,
   can_turn: true,
+  pacifist: false,
+  apples: 1,
 };
 
 //Board class
-export const Board = function (y, x) {
+export const Board = function(y, x) {
   var i = 0;
   var j = 0;
   //Dimensions of the grid calculated by the Generate_Board function
@@ -36,7 +49,7 @@ export const Board = function (y, x) {
     }
   }
   //The Snake class
-  this.Snake = function (y, x) {
+  this.Snake = function(y, x) {
     this.head = {
       x: x,
       y: y,
@@ -66,7 +79,7 @@ export const Board = function (y, x) {
   }
 };
 
-export const Generate_Board = function () {
+export const Generate_Board = function() {
   var h = document.querySelector(".v-toolbar").scrollHeight;
   var width = 25;
   var height = 25;
